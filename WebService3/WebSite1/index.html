@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="jquery-2.2.1.min.js"></script>
+    <script type="text/javascript" language="javascript">
+
+        function func3(data, status)
+        {
+            alert(data.d);
+        }
+
+        
+        function func1()
+        {
+            var xmlhttp = new XMLHttpRequest();
+            //var input = new Array(2);
+
+            //var stud1 = new Object();
+            //stud1.Name = "Vlad";
+            //stud1.AverageMark = 5.0;
+            //stud1.Sex = "Male";
+
+            //var stud2 = new Object();
+            //stud1.Name = "Vova";
+            //stud1.AverageMark = 3.0;
+            //stud1.Sex = "Male";
+
+            //input[1] = stud1;
+            //input[2] = stud2;
+
+            //alert(input);
+            
+            //var str = "";
+            //for (var i = 0; i < input.length;) {
+            //    str += "input=" + JSON.stringify(input[i]) + "&";
+            //    i++;
+            //}
+            //str += "mark=" + 4.0;
+
+            //alert(str);
+
+            var jdata = { input: ["String"] };
+
+            xmlhttp.open("POST", 'http://localhost:49228/StudentService.asmx/HelloWorld', false);
+
+            //xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            //xmlhttp.send("input=String");
+
+            xmlhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+            xmlhttp.send(JSON.stringify(jdata));
+
+            if (xmlhttp.status != 200) {
+                //xmlDoc = xmlhttp.responseXML;
+                //x = xmlDoc.getElementsByTagName("string");
+                //document.getElementById("text1").value = x[0].childNodes[0].nodeValue;
+
+                alert(xmlhttp.status + ": " + xmlhttp.statusText);
+            }
+            else {
+                alert(xmlhttp.responseText);
+            }
+
+            //$.ajax({
+            //    type: "POST",
+            //    url: "http://localhost:49228/StudentService.asmx/HelloWorld",
+            //    data: jdata,
+            //    contentType: "application/json;",
+            //    dataType: "json",
+            //    success: func3,
+            //    error: function (request, status, error) {
+            //        alert(error);
+            //    }
+            //});
+        }
+    </script>
+
+</head>
+<body onload="func1()">
+    
+    <input type="text" id="text1"/>
+
+</body>
+</html>

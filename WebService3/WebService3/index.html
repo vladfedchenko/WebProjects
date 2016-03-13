@@ -1,0 +1,227 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="jquery-2.2.1.min.js"></script>
+    <script type="text/javascript" language="javascript">
+
+        function json_success(data, status)
+        {
+            var resp = data;
+            var inner_html = "";
+            for (i = 0; i < resp.d.length; ++i) {
+                var tr = "<tr>" + "<td>" + resp.d[i].Name + "</td>" + "<td>" + resp.d[i].AverageMark + "</td>" + "</tr>";
+                inner_html = inner_html + tr;
+            }
+
+            document.getElementById("stud_table").innerHTML = inner_html;
+        }
+
+        function soap_success(data) {
+            var xroot = $(data).children().eq(0);
+            var xbody = xroot.children().eq(0);
+            var xresponse = xbody.children().eq(0);
+            var xrezult = xresponse.children().eq(0);
+            var resnodes = xrezult.children();
+            var inner_html = "";
+            for (i = 0; i < resnodes.length; ++i)
+            {
+                var stud = resnodes.eq(i);
+                var tr = '<tr>' +
+                            '<td>' + stud.children().eq(0).text() + '</td>' +
+                            '<td>' + stud.children().eq(1).text() + '</td>' +
+                            '<td>' + stud.children().eq(2).text() + '</td>' +
+                         '<tr>';
+                inner_html += tr;
+            }
+
+            document.getElementById("stud_table").innerHTML = inner_html;
+        }
+
+        
+        function func1()
+        {
+            var xmlhttp = new XMLHttpRequest();
+            var input = new Array(4);
+
+            var stud1 = new Object();
+            stud1.Name = "Vlad";
+            stud1.AverageMark = 5.0;
+            stud1.Sex = "Male";
+
+            var stud2 = new Object();
+            stud2.Name = "Vova";
+            stud2.AverageMark = 3.0;
+            stud2.Sex = "Male";
+
+            var stud3 = new Object();
+            stud3.Name = "Nadia";
+            stud3.AverageMark = 4.5;
+            stud3.Sex = "Female";
+
+            var stud4 = new Object();
+            stud4.Name = "Ivan";
+            stud4.AverageMark = 4.1;
+            stud4.Sex = "Male";
+
+            input[0] = stud1;
+            input[1] = stud2;
+            input[2] = stud3;
+            input[3] = stud4;
+
+            var jsonString = "{" +
+                                "input : " + JSON.stringify(input) + ", " +
+                                "mark : 4.0" +
+                             "}";
+
+            //pure ajax here
+
+            //xmlhttp.open("POST", 'StudentService.asmx/GetStudentsWithMakrHigherThan', false);
+
+            //xmlhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+            //xmlhttp.send(jsonString);
+
+            //if (xmlhttp.status != 200) {
+            //    alert(xmlhttp.status + ": " + xmlhttp.statusText);
+            //}
+            //else {
+            //    var resp = JSON.parse(xmlhttp.responseText);
+            //    var inner_html = "";
+            //    for (i = 0; i < resp.d.length; ++i)
+            //    {
+            //        var tr = "<tr>" + "<td>" + resp.d[i].Name + "</td>" + "<td>" + resp.d[i].AverageMark + "</td>" + "</tr>";
+            //        inner_html = inner_html + tr;
+            //    }
+
+            //    document.getElementById("stud_table").innerHTML = inner_html;
+            //}
+
+            //JQuery JSON service call
+
+            //$.ajax({
+            //    type: "POST",
+            //    url: "StudentService.asmx/GetStudentsWithMakrHigherThan",
+            //    data: jsonString,
+            //    contentType: "application/json;",
+            //    dataType: "json",
+            //    success: json_success,
+            //    error: function (request, status, error) {
+            //        alert(error);
+            //    }
+            //});
+
+            //SOAP 1.1
+            
+            //var textxml = '<?xml version=\"1.0\" encoding=\"utf-8\"?>' +
+            //                '<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">' +
+            //                  '<soap:Body>' +
+            //                    '<GetStudentsWithMakrHigherThan xmlns=\"http://tempuri.org\">' +
+            //                      '<input>' +
+            //                        '<Student>' +
+            //                          '<Name>Vlad</Name>' +
+            //                          '<AverageMark>5.0</AverageMark>' +
+            //                          '<Sex>Male</Sex>' +
+            //                        '</Student>' +
+            //                        '<Student>' +
+            //                          '<Name>Vova</Name>' +
+            //                          '<AverageMark>3.0</AverageMark>' +
+            //                          '<Sex>Male</Sex>' +
+            //                        '</Student>' +
+            //                        '<Student>' +
+            //                          '<Name>Nadia</Name>' +
+            //                          '<AverageMark>4.5</AverageMark>' +
+            //                          '<Sex>Female</Sex>' +
+            //                        '</Student>' +
+            //                        '<Student>' +
+            //                          '<Name>Ivan</Name>' +
+            //                          '<AverageMark>4.1</AverageMark>' +
+            //                          '<Sex>Male</Sex>' +
+            //                        '</Student>' +
+            //                      '</input>' +
+            //                      '<mark>4.0</mark>' +
+            //                    '</GetStudentsWithMakrHigherThan>' +
+            //                  '</soap:Body>' +
+            //                '</soap:Envelope>';
+
+            //$.ajax({
+            //    url: "StudentService.asmx",
+            //    contentType: 'text/xml; charset=utf-8',
+            //    data: textxml,
+            //    type: 'POST',
+            //    success: soap_success,
+            //    error: function (request, status, error) {
+            //                alert(error);
+            //            }
+            //})
+
+            //SOAP 1.2
+
+            var textxml = '<?xml version=\"1.0\" encoding=\"utf-8\"?>' +
+                            '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">' +
+                              '<soap12:Body>' +
+                                '<GetStudentsWithMakrHigherThan xmlns=\"http://tempuri.org\">' +
+                                  '<input>' +
+                                    '<Student>' +
+                                      '<Name>Vlad</Name>' +
+                                      '<AverageMark>5.0</AverageMark>' +
+                                      '<Sex>Male</Sex>' +
+                                    '</Student>' +
+                                    '<Student>' +
+                                      '<Name>Vova</Name>' +
+                                      '<AverageMark>3.0</AverageMark>' +
+                                      '<Sex>Male</Sex>' +
+                                    '</Student>' +
+                                    '<Student>' +
+                                      '<Name>Nadia</Name>' +
+                                      '<AverageMark>4.5</AverageMark>' +
+                                      '<Sex>Female</Sex>' +
+                                    '</Student>' +
+                                    '<Student>' +
+                                      '<Name>Ivan</Name>' +
+                                      '<AverageMark>4.1</AverageMark>' +
+                                      '<Sex>Male</Sex>' +
+                                    '</Student>' +
+                                  '</input>' +
+                                  '<mark>4.0</mark>' +
+                                '</GetStudentsWithMakrHigherThan>' +
+                              '</soap12:Body>' +
+                            '</soap12:Envelope>';
+
+            $.ajax({
+                url: "StudentService.asmx",
+                contentType: 'text/xml; charset=utf-8',
+                data: textxml,
+                type: 'POST',
+                success: soap_success,
+                error: function (request, status, error) {
+                    alert(error);
+                }
+            })
+
+
+        }
+    </script>
+
+    <style media="screen" type="text/css" id="style1">
+        table {
+            border : 1px dotted black;
+        }
+
+        th, td {
+            border : 1px solid black;
+            padding: 15px;
+        }
+    </style>
+
+</head>
+<body onload="func1()">
+    
+    <table id="stud_table">
+
+    </table>
+
+    <br/>
+
+</body>
+</html>
