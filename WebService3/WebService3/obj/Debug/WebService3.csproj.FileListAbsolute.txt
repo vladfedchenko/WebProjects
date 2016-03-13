@@ -1,6 +1,0 @@
-F:\Створити папку\WebService3\WebService3\bin\WebService3.dll
-F:\Створити папку\WebService3\WebService3\bin\WebService3.pdb
-F:\Створити папку\WebService3\WebService3\obj\Debug\WebService3.dll
-F:\Створити папку\WebService3\WebService3\obj\Debug\WebService3.pdb
-F:\Створити папку\WebService3\WebService3\bin\WebService3.dll.config
-F:\Створити папку\WebService3\WebService3\obj\Debug\WebService3.csprojResolveAssemblyReference.cache
